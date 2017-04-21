@@ -29,7 +29,7 @@ Next up, the service provider must be registered:
 
 you must publish the config file for customize log files:
 ```
-php artisan vendor:publish --provider="SpatieAhmedash95\LogWriter\Providers\LogWriterServiceProvider"
+php artisan vendor:publish --provider="Ahmedash95\LogWriter\Providers\LogWriterServiceProvider"
 ```
 
 This is the contents of the published file: ```config/logwriter.php```
