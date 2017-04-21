@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Ahmedash95\LogWriter;
-
 
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Monolog\Logger;
@@ -24,45 +22,49 @@ class LogWriter
     protected $levels = [];
 
     /**
-     * The base path of log files
+     * The base path of log files.
+     *
      * @var string
      */
     protected $logPath;
 
     /**
      * LogWriter constructor.
+     *
      * @param $config array
      */
-    public function __construct($config) {
+    public function __construct($config)
+    {
         $this->channels = $config['channels'];
         $this->levels = $config['levels'];
         $this->logPath = $config['log_path'];
     }
 
     /**
-     * Write to log based on the given channel and log level set
+     * Write to log based on the given channel and log level set.
      *
-     * @param type $channel
-     * @param type $message
+     * @param type  $channel
+     * @param type  $message
      * @param array $context
+     *
      * @throws InvalidArgumentException
      */
     public function writeLog($channel, $level, $message, array $context = [])
     {
         //check channel exist
-        if( !in_array($channel, array_keys($this->channels)) ){
+        if (!in_array($channel, array_keys($this->channels))) {
             throw new InvalidArgumentException('Invalid channel used.');
         }
 
         //lazy load logger
-        if( !isset($this->channels[$channel]['_instance']) ){
+        if (!isset($this->channels[$channel]['_instance'])) {
             //create instance
             $this->channels[$channel]['_instance'] = new Logger($channel);
             //add custom handler
             $this->channels[$channel]['_instance']->pushHandler(
                 new LogStreamHandler(
                     $channel,
-                    $this->logPath .'/'. $this->channels[$channel]['path'],
+                    $this->logPath.'/'.$this->channels[$channel]['path'],
                     $this->channels[$channel]['level']
                 )
             );
@@ -76,8 +78,9 @@ class LogWriter
      * @param $message
      * @param array $context
      */
-    public function write($channel, $message, array $context = []){
-        if(!isset($this->channels[$channel])){
+    public function write($channel, $message, array $context = [])
+    {
+        if (!isset($this->channels[$channel])) {
             throw new InvalidArgumentException("Channel [{$channel}] is not defined");
         }
         //get method name for the associated level
@@ -87,12 +90,13 @@ class LogWriter
     }
 
     //alert('event','Message');
+
     /**
      * @param $func
      * @param $params
      */
-    function __call($func, $params){
+    public function __call($func, $params)
+    {
         return $this->writeLog($params[0], $func, $params[1]);
     }
-
 }

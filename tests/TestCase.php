@@ -2,13 +2,11 @@
 
 namespace Ahmedash95\LogWriter\Test;
 
-
 use Ahmedash95\LogWriter\LogWriter;
 use Ahmedash95\LogWriter\Providers\LogWriterServiceProvider;
 use Illuminate\Support\Facades\Log;
 use Monolog\Logger;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Monolog\Handler\StreamHandler;
 
 abstract class TestCase extends Orchestra
 {
@@ -21,18 +19,19 @@ abstract class TestCase extends Orchestra
         parent::setUp();
     }
 
-    public function getLogWriterConfig(){
+    public function getLogWriterConfig()
+    {
         return [
             'log_path' => $this->getTempDir(),
 
             'channels' => [
                 'event' => [
-                    'path' => '/logs/event.log',
-                    'level' => Logger::INFO
+                    'path'  => '/logs/event.log',
+                    'level' => Logger::INFO,
                 ],
                 'audit' => [
-                    'path' => '/logs/audit.log',
-                    'level' => Logger::INFO
+                    'path'  => '/logs/audit.log',
+                    'level' => Logger::INFO,
                 ],
             ],
             'levels' => [
@@ -44,7 +43,7 @@ abstract class TestCase extends Orchestra
                 'critical'  => Logger::CRITICAL,
                 'alert'     => Logger::ALERT,
                 'emergency' => Logger::EMERGENCY,
-            ]
+            ],
         ];
     }
 
@@ -52,12 +51,15 @@ abstract class TestCase extends Orchestra
     {
         return [LogWriterServiceProvider::class];
     }
-    protected function getTempDir(){
+
+    protected function getTempDir()
+    {
         return __DIR__.'/tmp';
     }
 
-    public function tearDown(){
-        array_map('unlink', glob($this->getTempDir()."/logs/*.*"));
+    public function tearDown()
+    {
+        array_map('unlink', glob($this->getTempDir().'/logs/*.*'));
         @rmdir($this->getTempDir().'/logs');
     }
 }
