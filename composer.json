@@ -1,0 +1,40 @@
+{
+  "name": "ahmedash95/logwriter",
+  "description": "Laravel Package for custom loging files",
+  "keywords": [
+    "laravel",
+    "log",
+    "custom log"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ahmed Ashraf",
+      "email": "ahmed29329@gmail.com",
+      "homepage": "https://github.com/ahmedash95"
+    }
+  ],
+  "type": "library",
+  "require": {
+    "php": ">=5.6",
+    "illuminate/support": "~5.3.0|~5.4.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "5.*",
+    "orchestra/testbench": "~3.3.0|~3.4.0",
+    "mockery/mockery": "^0.9.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ahmedash95\\LogWriter\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ahmedash95\\LogWriter\\Test\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  }
+}
